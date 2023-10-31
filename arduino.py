@@ -17,6 +17,7 @@ def write(data):
     except Exception as e:
         st.error(f"An error occurred: {e}")
         print(f"An error occurred: {e}")
+    time.sleep(3)
 
 def read():
     time.sleep(1)
@@ -47,11 +48,12 @@ def init(userBaudrate="115200",count=1):
         print(f'Standard Baud Rates: {std_baudrate}')
         return
     
-    arduino_ports = 'COM'
-    for i in range(1,11,1):
+    arduino_ports = '/dev/ttyACM'
+    for i in range(0,11,1):
         #print(arduino_ports+str(i))
         port_active = arduino_ports + str(i)
         try:
+            print(port_active)
             with serial.Serial(port_active) as arduino: 
                 arduino_activated = True
                 break
@@ -85,19 +87,15 @@ def close():
         pass
         #print(globals())
 
-def waitforRFID():
-    if not arduino_activated:
-        init()
-    pass
-
 def activeCOMS():
     activePorts = list()
     #activePorts.append('COM111')
     #activePorts.append('COM112')
-    arduino_ports = 'COM'
-    for i in range(1,11,1):
+    arduino_ports = '/dev/ttyACM'
+    for i in range(0,11,1):
         #print(arduino_ports+str(i))
         port_active = arduino_ports + str(i)
+        #print(port_active)
         try:
             with serial.Serial(port_active) as arduino: 
                 activePorts.append(port_active)
@@ -127,3 +125,5 @@ def ini(COMPort,userBaudrate='115200'):
     #except:
     #    return False
     
+print(activeCOMS())
+#ini()
